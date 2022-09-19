@@ -74,10 +74,10 @@ func ProxyRequestHandler(proxy *httputil.ReverseProxy) func(w http.ResponseWrite
 }
 
 func logRequest(r *http.Request) {
-	targetHost := "https://httpbin.org/"
+	targetHost := "https://httpbin.org"
 	targetURI := r.RequestURI
 
-	fmt.Printf("Redirecting to: %s%s\n", targetHost, targetURI)
+	fmt.Printf("%s request from %s -- redirecting to: %s%s\n", r.Method, r.RemoteAddr, targetHost, targetURI)
 }
 
 func main() {
@@ -89,5 +89,5 @@ func main() {
 
 	// Handle all requests to the server using the proxy
 	http.HandleFunc("/", ProxyRequestHandler(proxy))
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8081", nil))
 }
